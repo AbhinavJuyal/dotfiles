@@ -1,15 +1,7 @@
-tt.*
-.tests
-doc/tags
-debug
-.repro
-foo.*
-*.log
-data
+*
 
-
-LICENSE
-README.md
-/*.json
-/*.md
-/*.toml
+# nvim files
+!nvim
+!nvim/**
+nvim/LICENSE
+nvim/*[.md, .json, .toml]
