@@ -5,3 +5,7 @@
 !nvim/**
 nvim/LICENSE
 nvim/*[.md, .json, .toml]
+
+#wezterm files
+!wezterm
+!wezterm/**
