@@ -16,7 +16,8 @@ config = {
 	background = {
 		{
 			source = {
-				File = "/usr/share/backgrounds/ubuntu-wallpaper-d.png",
+				-- File = "/usr/share/backgrounds/ubuntu-wallpaper-d.png",
+				File = "/usr/share/backgrounds/Fuji_san_by_amaral.png",
 			},
 			hsb = {
 				hue = 1.0,
@@ -28,11 +29,12 @@ config = {
 		},
 		{
 			source = {
-				Color = "#282c35",
+				-- Color = "#282c35",
+				Color = "#000000",
 			},
 			width = "100%",
 			height = "100%",
-			opacity = 0.55,
+			opacity = 0.75,
 		},
 	},
 	window_padding = {

@@ -7,3 +7,8 @@
 -- vim.cmd([[let &t_Ce = "\e[4:0m"]])
 
 vim.g.lazyvim_picker = "telescope"
+
+-- Disabling lazyvim colorscheme and using terminal colorscheme
+-- vim.cmd.colorscheme = nil
+-- vim.opt.termguicolors = false
+-- vim.cmd("set t_Co=256")
