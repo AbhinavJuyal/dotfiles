@@ -9,3 +9,7 @@ nvim/*[.md, .json, .toml]
 #wezterm files
 !wezterm
 !wezterm/**
+
+#ghostty files
+!ghostty
+!ghostty/**
