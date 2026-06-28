@@ -126,8 +126,10 @@
       "space e": "workspace::ToggleRightDock", // project panel (dock=right)
 
       // ── Terminal (<leader>t) ─────────────────────────────────────────
-      "space t t": "terminal_panel::ToggleFocus",
-      "space f t": "terminal_panel::ToggleFocus",
+      "space t t": "terminal_panel::ToggleFocus", // toggle dock terminal
+      "space f t": "terminal_panel::ToggleFocus", // toggle dock terminal
+      "space t T": "workspace::NewCenterTerminal", // terminal in a new tab
+      "space f T": "workspace::NewCenterTerminal", // terminal in a new tab
 
       // ── Windows / splits (<leader>w) ─────────────────────────────────
       "space w s": "pane::SplitDown", // split below
