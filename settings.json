@@ -20,8 +20,11 @@
   "git_panel": {
     "tree_view": true
   },
+  // Shows the pending-keys hint popup (like which-key). Zed uses each
+  // action's built-in name as the label; custom desc text isn't supported.
   "which_key": {
-    "enabled": true
+    "enabled": true,
+    "delay": 300
   },
   "project_panel": {
     "folder_icons": true,

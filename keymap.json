@@ -192,12 +192,26 @@
 
   // ───────────────────────────────────────────────────────────────────────
   // Sneak (s / S) — leap-style motion like LazyVim's flash.nvim
+  // Normal mode: s = forward, S = backward.
   // ───────────────────────────────────────────────────────────────────────
   {
-    "context": "(vim_mode == normal || vim_mode == visual) && !Terminal",
+    "context": "vim_mode == normal && !Terminal",
     "bindings": {
       "s": "vim::PushSneak",
       "S": "vim::PushSneakBackward"
+    }
+  },
+
+  // ───────────────────────────────────────────────────────────────────────
+  // Surround — built into Zed vim mode (ys / cs / ds work by default).
+  // Visual mode: S surrounds the selection (LazyVim / mini.surround).
+  // s stays as sneak-forward in visual mode.
+  // ───────────────────────────────────────────────────────────────────────
+  {
+    "context": "vim_mode == visual && !Terminal",
+    "bindings": {
+      "s": "vim::PushSneak",
+      "shift-s": "vim::PushAddSurrounds"
     }
   },
 
