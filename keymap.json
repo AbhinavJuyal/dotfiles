@@ -1,28 +1,24 @@
+// Zed keymap — LazyVim-style bindings
+// Leader is <space>. Mirrors LazyVim defaults where Zed has an equivalent.
+// Docs: https://zed.dev/docs/key-bindings  •  LazyVim: https://www.lazyvim.org/keymaps
 [
-  // Terminal
-  // {
-  //   "context": "Workspace && !Terminal",
-  //   "bindings": {
-  //     "space t c": "workspace::NewTerminal"
-  //   }
-  // },
-  // Window's navigation
+  // ───────────────────────────────────────────────────────────────────────
+  // Window / pane navigation — works in editor, terminal and docks
+  // <C-h/j/k/l> move between splits (LazyVim default)
+  // ───────────────────────────────────────────────────────────────────────
   {
     "context": "Dock || Terminal || Editor",
     "bindings": {
-      // Window's motions
       "ctrl-h": "workspace::ActivatePaneLeft",
       "ctrl-l": "workspace::ActivatePaneRight",
       "ctrl-k": "workspace::ActivatePaneUp",
       "ctrl-j": "workspace::ActivatePaneDown"
     }
   },
-  // {
-  // 	"context": "GitPanel",
-  // 	"bindings": {
-  // 		"q": "git_panel::Close"
-  // 	}
-  // },
+
+  // ───────────────────────────────────────────────────────────────────────
+  // AI / Agent panel toggle
+  // ───────────────────────────────────────────────────────────────────────
   {
     "context": "AgentPanel",
     "bindings": {
@@ -30,202 +26,173 @@
       "cmd-k": "workspace::ToggleRightDock"
     }
   },
-  // File panel (netrw)
-  // {
-  //   "context": "ProjectPanel && not_editing",
-  //   "bindings": {
-  //     "a": "project_panel::NewFile",
-  //     "A": "project_panel::NewDirectory",
-  //     "r": "project_panel::Rename",
-  //     "d": "project_panel::Delete",
-  //     "x": "project_panel::Cut",
-  //     "c": "project_panel::Copy",
-  //     "p": "project_panel::Paste",
-  //     // Close project panel as project file panel on the right
-  //     "q": "workspace::ToggleLeftDock",
-  //     "space e": "workspace::ToggleLeftDock",
-  //     ":": "command_palette::Toggle",
-  //     "%": "project_panel::NewFile",
-  //     "/": "project_panel::NewSearchInDirectory",
-  //     "enter": "project_panel::OpenPermanent",
-  //     "escape": "project_panel::ToggleFocus",
-  //     "h": "project_panel::CollapseSelectedEntry",
-  //     "j": "menu::SelectNext",
-  //     "k": "menu::SelectPrevious",
-  //     "l": "project_panel::ExpandSelectedEntry",
-  //     "o": "project_panel::OpenPermanent",
-  //     "shift-d": "project_panel::Delete",
-  //     "shift-r": "project_panel::Rename",
-  //     "t": "project_panel::OpenPermanent",
-  //     "v": "project_panel::OpenPermanent",
-  //     "shift-g": "menu::SelectLast",
-  //     "g g": "menu::SelectFirst",
-  //     "-": "project_panel::SelectParent",
-  //     "ctrl-6": "pane::AlternateFile"
-  //   }
-  // },
-  // Empty pane, set of keybindings that are available when there is no active editor
+
+  // ───────────────────────────────────────────────────────────────────────
+  // Empty pane — bindings available when no editor is focused
+  // ───────────────────────────────────────────────────────────────────────
   {
     "context": "(EmptyPane || SharedScreen) && !Terminal",
     "bindings": {
-      // Open file finder
-      "; f": "file_finder::Toggle",
-      // New file
-      "space f n": "workspace::NewFile",
-      // Open recent project
-      "space f p": "projects::OpenRecent",
-      // Search in all the files
-      "space s g": "workspace::NewSearch",
-      // Quit zed
-      "space q q": "zed::Quit"
+      "; f": "file_finder::Toggle", // find files
+      "space space": "file_finder::Toggle", // <leader><space> find files
+      "space f n": "workspace::NewFile", // new file
+      "space f f": "file_finder::Toggle", // find files
+      "space f p": "projects::OpenRecent", // open recent project
+      "space f r": "file_finder::Toggle", // recent files
+      "space /": "workspace::NewSearch", // grep
+      "space s g": "workspace::NewSearch", // grep
+      "space q q": "zed::Quit" // quit
     }
   },
+
+  // ───────────────────────────────────────────────────────────────────────
+  // Main normal-mode leader bindings (vim control, not waiting on a motion)
+  // ───────────────────────────────────────────────────────────────────────
   {
     "context": "Editor && VimControl && !VimWaiting && !menu && !Terminal",
     "bindings": {
-      // Save file
       "ctrl-s": "workspace::Save",
-      // Refactoring
-      "space c r ": "editor::Rename",
-      // Chat with AI
-      // "space a a": "assistant::ToggleFocus",
-      // "ctrl-\\": "workspace::ToggleRightDock",
-      // "cmd-k": "workspace::ToggleRightDock",
-      // "space a e": "assistant::InlineAssist",
-      // "cmd-l": "assistant::InlineAssist",
-      // "space a t": "workspace::ToggleRightDock",
-      // Git
+
+      // ── Find / Files (<leader>f, ;) ──────────────────────────────────
+      "; f": "file_finder::Toggle",
+      "space space": "file_finder::Toggle",
+      "space f f": "file_finder::Toggle",
+      "space f n": "workspace::NewFile",
+      "space b n": "workspace::NewFile",
+      "space f p": "projects::OpenRecent",
+      "space f r": "file_finder::Toggle",
+
+      // ── Search (<leader>s, ;) ────────────────────────────────────────
+      "space /": "workspace::NewSearch", // grep across project
+      "; r": "workspace::NewSearch", // live grep (your habit)
+      "space s g": "workspace::NewSearch", // grep
+      "space s w": "buffer_search::Deploy", // search word in buffer
+      "space s W": "pane::DeploySearch", // search word in project
+      "space s s": "outline::Toggle", // document symbols
+      "space s S": "project_symbols::Toggle", // workspace symbols
+      "; s": "outline::Toggle", // treesitter symbols (your habit)
+      "space s d": "diagnostics::Deploy", // workspace diagnostics
+      "; e": "diagnostics::Deploy", // diagnostics (your habit)
+      "space s k": "command_palette::Toggle", // keymaps -> palette
+      "space s c": "command_palette::Toggle", // commands
+
+      // ── Buffers (<leader>b) ──────────────────────────────────────────
+      "space b b": "pane::AlternateFile", // switch to other buffer
+      "space b d": "pane::CloseActiveItem", // delete buffer
+      "space b o": "pane::CloseInactiveItems", // delete other buffers
+      "space b D": "pane::CloseAllItems", // delete buffer + window
+      "shift-h": "pane::ActivatePreviousItem", // prev buffer
+      "shift-l": "pane::ActivateNextItem", // next buffer
+      "[ b": "pane::ActivatePreviousItem", // prev buffer
+      "] b": "pane::ActivateNextItem", // next buffer
+
+      // ── Tab-jump (harpoon-ish, LazyVim <leader>1..9 via ActivateItem) ─
+      "space 1": ["pane::ActivateItem", 0],
+      "space 2": ["pane::ActivateItem", 1],
+      "space 3": ["pane::ActivateItem", 2],
+      "space 4": ["pane::ActivateItem", 3],
+      "space 5": ["pane::ActivateItem", 4],
+      "space 6": ["pane::ActivateItem", 5],
+      "space 7": ["pane::ActivateItem", 6],
+      "space 8": ["pane::ActivateItem", 7],
+      "space 9": ["pane::ActivateItem", 8],
+
+      // ── Code / LSP (<leader>c) ───────────────────────────────────────
+      "space c a": "editor::ToggleCodeActions", // code action
+      "space c r": "editor::Rename", // rename symbol
+      "space c f": "editor::Format", // format
+      "space c d": "editor::Hover", // line diagnostics / hover
+      "space c u": "editor::ToggleCodeActions", // quick fix-ish
+
+      // ── Git (<leader>g) ──────────────────────────────────────────────
       "space g g": [
         "task::Spawn",
-        {
-          "task_name": "lazygit",
-          "reveal_target": "center"
-        }
+        { "task_name": "lazygit", "reveal_target": "center" }
       ],
-      // "space g h d": "editor::ExpandAllDiffHunks",
-      // "space g h D": "git::Diff",
-      // "space g h r": "git::Restore",
-      // "space g h R": "git::RestoreFile",
-      // Toggle inlay hints
+      "space g b": "git::Blame", // toggle blame
+      "space g d": "git::Diff", // diff working tree
+      "space g s": "git_panel::ToggleFocus", // git status panel
+
+      // ── UI toggles (<leader>u) ───────────────────────────────────────
       "space u i": "editor::ToggleInlayHints",
-      // Toggle soft wrap
       "space u w": "editor::ToggleSoftWrap",
-      // Open markdown preview
+      "space u l": "editor::ToggleRelativeLineNumbers",
+
+      // ── Markdown (<leader>m) ─────────────────────────────────────────
       "space m p": "markdown::OpenPreview",
       "space m P": "markdown::OpenPreviewToTheSide",
-      // Open recent project
-      "space f p": "projects::OpenRecent",
-      // Search word under cursor in current pane
-      "space s w": "buffer_search::Deploy",
-      // Search word under cursor in all panes
-      "space s W": "pane::DeploySearch",
-      // Tab things. Almost as good as harpoon.
-      // "space 1": ["pane::ActivateItem", 0],
-      // "space 2": ["pane::ActivateItem", 1],
-      // "space 3": ["pane::ActivateItem", 2],
-      // "space 4": ["pane::ActivateItem", 3],
-      // "space 5": ["pane::ActivateItem", 4],
-      // "space 6": ["pane::ActivateItem", 5],
-      // "space 7": ["pane::ActivateItem", 6],
-      // "space 8": ["pane::ActivateItem", 7],
-      // "space 9": ["pane::ActivateItem", 8],
-      // "space 0": "pane::ActivateLastItem",
-      // "] b": "pane::ActivateNextItem",
-      // "[ b": "pane::ActivatePreviousItem",
-      // "space ,": "tab_switcher::Toggle",
-      // Jump to the toogle prev and current buffer
-      "space b b": "pane::AlternateFile",
-      // shift to different buffer
-      "shift-h": "pane::ActivatePreviousItem",
-      "shift-l": "pane::ActivateNextItem",
-      // Close buffer
-      "space b d": "pane::CloseActiveItem",
-      // Close inactive buffers
-      "space b o": "pane::CloseInactiveItems",
-      // New file
-      "space b n": "workspace::NewFile",
-      // Search in the current buffer
-      // "space s b": "vim::Search",
-      // Search in all the files
-      // "space s g": "workspace::NewSearch",
-      "space f n": "workspace::NewFile",
-      // Search
-      // "space /": "workspace::NewSearch",
-      // Git
-      "space g b": "git::Blame",
-      // LSP & Code actions
-      "space c a": "editor::ToggleCodeActions",
-      "space s d": "diagnostics::Deploy",
-      // Format
-      "space c f": "editor::Format",
-      // Remove unused code (opens code actions menu)
-      "space c u": "editor::ToggleCodeActions",
-      // File explorer
-      // "space e": "workspace::ToggleLeftDock",
-      // Telescope
-      "; f": "file_finder::Toggle",
-      "; r": "pane::DeploySearch",
-      // Quit zed
-      "space q q": "zed::Quit",
-      // Terminal
+
+      // ── File explorer (<leader>e) ────────────────────────────────────
+      "space e": "workspace::ToggleRightDock", // project panel (dock=right)
+
+      // ── Terminal (<leader>t) ─────────────────────────────────────────
       "space t t": "terminal_panel::ToggleFocus",
-      // Windows management
-      "space w s": "pane::SplitDown",
-      "space w v": "pane::SplitRight",
-      "space -": "pane::SplitDown",
-      "space |": "pane::SplitRight",
+      "space f t": "terminal_panel::ToggleFocus",
 
-      /// not sure about these
-      "space w c": "pane::CloseAllItems",
-      "space w d": "pane::CloseAllItems"
-      ////////////////////////
+      // ── Windows / splits (<leader>w) ─────────────────────────────────
+      "space w s": "pane::SplitDown", // split below
+      "space w v": "pane::SplitRight", // split right
+      "space w -": "pane::SplitDown", // split below (alt)
+      "space w |": "pane::SplitRight", // split right (alt)
+      "space w d": "pane::CloseActiveItem", // close window
+      "space w c": "pane::CloseActiveItem", // close window
+      "space w o": "pane::CloseInactiveItems", // close other windows
 
-      // Jump to hunks
-      // "] h": "editor::GoToHunk",
-      // "[ h": "editor::GoToPreviousHunk",
-      // "] c": "editor::GoToHunk",
-      // "[ c": "editor::GoToPreviousHunk",
-      // Jump to diagnostic
-      // "] d": "editor::GoToDiagnostic",
-      // "[ d": "editor::GoToPreviousDiagnostic",
-      // "] e": "editor::GoToDiagnostic",
-      // "[ e": "editor::GoToPreviousDiagnostic",
-      // Excerpts
-      // "] q": "editor::MoveToStartOfNextExcerpt",
-      // "[ q": "editor::MoveToStartOfExcerpt"
+      // ── Quit (<leader>q) ─────────────────────────────────────────────
+      "space q q": "zed::Quit"
     }
   },
+
+  // ───────────────────────────────────────────────────────────────────────
+  // Normal mode only — line moving (Alt-j/k like LazyVim's <A-j>/<A-k>)
+  // ───────────────────────────────────────────────────────────────────────
   {
     "context": "Editor && vim_mode == normal && !VimWaiting && !VimObject && !Terminal",
     "bindings": {
-      // Line's Motions
       "alt-j": "editor::MoveLineDown",
       "alt-k": "editor::MoveLineUp"
     }
   },
-  // Center the cursor on the screen when scrolling and find all references
+
+  // ───────────────────────────────────────────────────────────────────────
+  // Visual mode — keep selection while moving lines, indent, etc.
+  // ───────────────────────────────────────────────────────────────────────
+  {
+    "context": "Editor && vim_mode == visual && !VimWaiting && !Terminal",
+    "bindings": {
+      "alt-j": "editor::MoveLineDown",
+      "alt-k": "editor::MoveLineUp"
+      // Note: Zed's vim mode already keeps the selection after </> indent.
+    }
+  },
+
+  // ───────────────────────────────────────────────────────────────────────
+  // ]/[ motion pairs — diagnostics, hunks, references (LazyVim defaults)
+  // ───────────────────────────────────────────────────────────────────────
   {
     "context": "VimControl && !menu && !Terminal",
     "bindings": {
-      /// not sure about this
-      // "ctrl-d": ["workspace::SendKeystrokes", "ctrl-d z z"],
-      // "ctrl-u": ["workspace::SendKeystrokes", "ctrl-u z z"],
-      // "n": ["workspace::SendKeystrokes", "n z z z v"],
-      // "shift-n": ["workspace::SendKeystrokes", "shift-n z z z v"],
-      // "shift-g": ["workspace::SendKeystrokes", "shift-g z z"],
       "g r": "editor::FindAllReferences",
-      // Jump between matching brackets/tags
       "] i": "editor::MoveToEnclosingBracket",
-      "[ i": "editor::MoveToEnclosingBracket"
+      "[ i": "editor::MoveToEnclosingBracket",
+
+      // diagnostics
+      "] d": "editor::GoToDiagnostic",
+      "[ d": "editor::GoToPreviousDiagnostic",
+      "] e": "editor::GoToDiagnostic",
+      "[ e": "editor::GoToPreviousDiagnostic",
+
+      // git hunks
+      "] h": "editor::GoToHunk",
+      "[ h": "editor::GoToPreviousHunk",
+      "] c": "editor::GoToHunk",
+      "[ c": "editor::GoToPreviousHunk"
     }
   },
-  // {
-  //   "context": "vim_operator == d",
-  //   "bindings": {
-  //     "o": "editor::ExpandAllDiffHunks",
-  //     "r": "git::Restore"
-  //   }
-  // },
+
+  // ───────────────────────────────────────────────────────────────────────
+  // Sneak (s / S) — leap-style motion like LazyVim's flash.nvim
+  // ───────────────────────────────────────────────────────────────────────
   {
     "context": "(vim_mode == normal || vim_mode == visual) && !Terminal",
     "bindings": {
@@ -233,6 +200,10 @@
       "S": "vim::PushSneakBackward"
     }
   },
+
+  // ───────────────────────────────────────────────────────────────────────
+  // Yazi file manager (replaces neo-tree / netrw) — <leader>- and <leader>cw
+  // ───────────────────────────────────────────────────────────────────────
   {
     "context": "(EmptyPane || SharedScreen || (Editor && vim_mode == normal && !menu)) && !Terminal",
     "bindings": {
@@ -246,10 +217,4 @@
       ]
     }
   }
-  // {
-  //   "context": "vim_operator == a || vim_operator == i || vim_operator == cs",
-  //   "bindings": {
-  //     "b": "vim::AnyBrackets"
-  //   }
-  // }
 ]
