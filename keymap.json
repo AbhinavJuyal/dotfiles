@@ -17,6 +17,24 @@
   },
 
   // ───────────────────────────────────────────────────────────────────────
+  // Terminal focus — escape back to the editor / switch tabs WITHOUT closing
+  // this terminal tab. ctrl-h/l switch tabs here (vs. pane-movement in the
+  // editor); ctrl-j/k still move between split panes so you can leave a lone
+  // terminal tab that has no sibling tabs. ctrl-o jumps back to the last file.
+  // NOTE: TUIs (lazygit/yazi) may capture these keys themselves.
+  // ───────────────────────────────────────────────────────────────────────
+  {
+    "context": "Terminal",
+    "bindings": {
+      "ctrl-l": "pane::ActivateNextItem", // next tab
+      "ctrl-h": "pane::ActivatePreviousItem", // previous tab
+      "ctrl-j": "workspace::ActivatePaneDown", // move to pane below
+      "ctrl-k": "workspace::ActivatePaneUp", // move to pane above
+      "ctrl-o": "pane::AlternateFile" // jump back to last-edited file
+    }
+  },
+
+  // ───────────────────────────────────────────────────────────────────────
   // AI / Agent panel toggle
   // ───────────────────────────────────────────────────────────────────────
   {
