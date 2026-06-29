@@ -98,7 +98,10 @@
       "space b b": "pane::AlternateFile", // switch to other buffer
       "space ,": "tab_switcher::Toggle", // fuzzy tab switcher
       "space b d": "pane::CloseActiveItem", // delete buffer
-      "space b o": "pane::CloseInactiveItems", // delete other buffers
+      "space b o": ["pane::CloseInactiveItems", { "close_pinned": false }], // delete other buffers (keeps pinned)
+      "space b l": ["pane::CloseItemsToTheLeft", { "close_pinned": false }], // delete buffers to the left (keeps pinned)
+      "space b r": ["pane::CloseItemsToTheRight", { "close_pinned": false }], // delete buffers to the right (keeps pinned)
+      "space b p": "pane::TogglePinTab", // pin/unpin tab (pin the terminal to protect it)
       "space b D": "pane::CloseAllItems", // delete buffer + window
       "shift-h": "pane::ActivatePreviousItem", // prev buffer
       "shift-l": "pane::ActivateNextItem", // next buffer
