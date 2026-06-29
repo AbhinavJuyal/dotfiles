@@ -96,6 +96,7 @@
 
       // ── Buffers (<leader>b) ──────────────────────────────────────────
       "space b b": "pane::AlternateFile", // switch to other buffer
+      "space ,": "tab_switcher::Toggle", // fuzzy tab switcher
       "space b d": "pane::CloseActiveItem", // delete buffer
       "space b o": "pane::CloseInactiveItems", // delete other buffers
       "space b D": "pane::CloseAllItems", // delete buffer + window
