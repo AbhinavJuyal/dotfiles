@@ -30,7 +30,8 @@
       "ctrl-h": "pane::ActivatePreviousItem", // previous tab
       "ctrl-j": "workspace::ActivatePaneDown", // move to pane below
       "ctrl-k": "workspace::ActivatePaneUp", // move to pane above
-      "ctrl-o": "pane::AlternateFile" // jump back to last-edited file
+      "ctrl-o": "pane::AlternateFile", // jump back to last-edited file
+      "ctrl-p": "pane::TogglePinTab" // pin/unpin (used to auto-pin new terminals)
     }
   },
 
@@ -150,8 +151,12 @@
       // ── Terminal (<leader>t) ─────────────────────────────────────────
       "space t t": "terminal_panel::ToggleFocus", // toggle dock terminal
       "space f t": "terminal_panel::ToggleFocus", // toggle dock terminal
-      "space t T": "workspace::NewCenterTerminal", // terminal in a new tab
-      "space f T": "workspace::NewCenterTerminal", // terminal in a new tab
+      "ctrl-alt-t": "workspace::NewCenterTerminal", // opener (also used by the auto-pin chain below)
+      // Open terminal in a new tab AND auto-pin it (ctrl-p pins in Terminal
+      // context), so it survives space bo / bl / br close-others actions.
+      // Chains the open action then sends ctrl-p to pin the focused terminal.
+      "space t T": ["workspace::SendKeystrokes", "ctrl-alt-t ctrl-p"],
+      "space f T": ["workspace::SendKeystrokes", "ctrl-alt-t ctrl-p"],
 
       // ── Windows / splits (<leader>w) ─────────────────────────────────
       "space w s": "pane::SplitDown", // split below
