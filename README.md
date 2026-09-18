@@ -1,0 +1,35 @@
+# dotfiles
+
+Managed with [GNU Stow](https://www.gnu.org/software/stow/). Each top-level
+directory is a *package* whose contents mirror the layout under `$HOME`.
+
+## Setup on a new machine
+
+```sh
+brew install stow
+git clone git@github.com:AbhinavJuyal/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+stow -t ~ ghostty git fish
+```
+
+`stow` creates symlinks, so editing a file in `~/.config/...` edits the file in
+this repo. To unlink a package: `stow -t ~ -D <package>`.
+
+## Packages
+
+| Package   | Links to             | Notes                                          |
+| --------- | -------------------- | ---------------------------------------------- |
+| `ghostty` | `~/.config/ghostty`  | JetBrainsMono Nerd Font 15, Gruvbox dark hard   |
+| `git`     | `~/.gitconfig`, `~/.gitignore` | delta as pager, `zdiff3` merge conflicts |
+| `fish`    | `~/.config/fish`     | login shell; `fish_variables` is machine state and not tracked |
+
+## Not tracked here
+
+- **Neovim** — its own repo at [AbhinavJuyal/nvim](https://github.com/AbhinavJuyal/nvim),
+  stowed from `nvim/.config/nvim` but git-ignored here so the two histories stay separate.
+- **Zed** — keeps its own git repo at `~/.config/zed` with local-only history.
+
+## Dependencies
+
+Installed via Homebrew: `stow`, `git-delta`, `lazygit`, `yazi`, `ripgrep`, `fd`, `fzf`.
+Ghostty and the Nerd Font are installed separately.

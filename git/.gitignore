@@ -1,0 +1,7 @@
+# ignoring all CLAUDE.md files
+CLAUDE.md
+.claude/**/*
+.*-mcp
+.mcp.json
+# ignoring all zed ide files
+.zed/**/*

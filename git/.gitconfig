@@ -1,0 +1,14 @@
+[user]
+	name = Abhinav Juyal
+	email = abhinavj462@gmail.com
+[core]
+	excludesfile = /Users/abhinav/.gitignore
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+	side-by-side = true
+	line-numbers = true
+[merge]
+	conflictStyle = zdiff3
