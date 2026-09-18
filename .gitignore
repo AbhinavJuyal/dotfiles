@@ -1,8 +1,5 @@
 .DS_Store
 
-# nvim is tracked in its own repo (AbhinavJuyal/nvim) and stowed from here.
-nvim/.config/nvim/
-
 # Zed keeps its own git repo at ~/.config/zed (local history, no remote).
 # Not stowed from here to avoid destroying that history.
 zed/
