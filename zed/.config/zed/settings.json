@@ -1,0 +1,77 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "agent_servers": {
+    "claude-acp": {
+      "default_config_options": {
+        "mode": "plan"
+      },
+      "type": "registry"
+    }
+  },
+  "outline_panel": {
+    "dock": "left"
+  },
+  "collaboration_panel": {
+    "dock": "left"
+  },
+  "agent": {
+    "dock": "right",
+    "favorite_models": [],
+    "model_parameters": []
+  },
+  "diagnostics": {
+    "inline": {
+      "enabled": true
+    }
+  },
+  "inline_code_actions": true,
+  "inlay_hints": {
+    "show_value_hints": true,
+    "enabled": true
+  },
+  "git_panel": {
+    "dock": "left",
+    "tree_view": true
+  },
+  // Shows the pending-keys hint popup (like which-key). Zed uses each
+  // action's built-in name as the label; custom desc text isn't supported.
+  "which_key": {
+    "enabled": true,
+    "delay": 300
+  },
+  "project_panel": {
+    "folder_icons": true,
+    "file_icons": true,
+    "dock": "right"
+  },
+  "icon_theme": "vscode-icons",
+  "terminal": {
+    "font_family": "JetBrainsMono Nerd Font",
+    "font_size": 14
+  },
+  "vim": {
+    "use_smartcase_find": true,
+    "toggle_relative_line_numbers": true,
+    "highlight_on_yank_duration": 200
+  },
+  "vim_mode": true,
+  // LazyVim-like editor feel
+  "relative_line_numbers": true,
+  "scroll_beyond_last_line": "one_page",
+  "vertical_scroll_margin": 8,
+  "cursor_blink": false,
+  "ui_font_size": 16,
+  "buffer_font_size": 15,
+  "theme": {
+    "mode": "dark",
+    "light": "One Light",
+    "dark": "One Dark"
+  }
+}

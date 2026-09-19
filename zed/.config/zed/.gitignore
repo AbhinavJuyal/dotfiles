@@ -1,0 +1,4 @@
+.DS_Store
+
+# Zed runtime prompt-library database (not config)
+prompts/prompts-library-db.0.mdb/

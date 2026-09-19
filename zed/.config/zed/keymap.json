@@ -1,0 +1,263 @@
+// Zed keymap — LazyVim-style bindings
+// Leader is <space>. Mirrors LazyVim defaults where Zed has an equivalent.
+// Docs: https://zed.dev/docs/key-bindings  •  LazyVim: https://www.lazyvim.org/keymaps
+[
+  // ───────────────────────────────────────────────────────────────────────
+  // Window / pane navigation — works in editor, terminal and docks
+  // <C-h/j/k/l> move between splits (LazyVim default)
+  // ───────────────────────────────────────────────────────────────────────
+  {
+    "context": "Dock || Terminal || Editor",
+    "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-j": "workspace::ActivatePaneDown"
+    }
+  },
+
+  // ───────────────────────────────────────────────────────────────────────
+  // Terminal focus — escape back to the editor / switch tabs WITHOUT closing
+  // this terminal tab. ctrl-h/l switch tabs here (vs. pane-movement in the
+  // editor); ctrl-j/k still move between split panes so you can leave a lone
+  // terminal tab that has no sibling tabs. ctrl-o jumps back to the last file.
+  // NOTE: TUIs (lazygit/yazi) may capture these keys themselves.
+  // ───────────────────────────────────────────────────────────────────────
+  {
+    "context": "Terminal",
+    "bindings": {
+      "ctrl-l": "pane::ActivateNextItem", // next tab
+      "ctrl-h": "pane::ActivatePreviousItem", // previous tab
+      "ctrl-j": "workspace::ActivatePaneDown", // move to pane below
+      "ctrl-k": "workspace::ActivatePaneUp", // move to pane above
+      "ctrl-o": "pane::AlternateFile", // jump back to last-edited file
+      "ctrl-p": "pane::TogglePinTab" // pin/unpin (used to auto-pin new terminals)
+    }
+  },
+
+  // ───────────────────────────────────────────────────────────────────────
+  // AI / Agent panel toggle
+  // ───────────────────────────────────────────────────────────────────────
+  {
+    "context": "AgentPanel",
+    "bindings": {
+      "ctrl-\\": "workspace::ToggleRightDock",
+      "cmd-k": "workspace::ToggleRightDock"
+    }
+  },
+
+  // ───────────────────────────────────────────────────────────────────────
+  // Empty pane — bindings available when no editor is focused
+  // ───────────────────────────────────────────────────────────────────────
+  {
+    "context": "(EmptyPane || SharedScreen) && !Terminal",
+    "bindings": {
+      "; f": "file_finder::Toggle", // find files
+      "space space": "file_finder::Toggle", // <leader><space> find files
+      "space f n": "workspace::NewFile", // new file
+      "space f f": "file_finder::Toggle", // find files
+      "space f p": "projects::OpenRecent", // open recent project
+      "space f r": "file_finder::Toggle", // recent files
+      "space /": "workspace::NewSearch", // grep
+      "space s g": "workspace::NewSearch", // grep
+      "space q q": "zed::Quit" // quit
+    }
+  },
+
+  // ───────────────────────────────────────────────────────────────────────
+  // Main normal-mode leader bindings (vim control, not waiting on a motion)
+  // ───────────────────────────────────────────────────────────────────────
+  {
+    "context": "Editor && VimControl && !VimWaiting && !menu && !Terminal",
+    "bindings": {
+      "ctrl-s": "workspace::Save",
+
+      // ── Find / Files (<leader>f, ;) ──────────────────────────────────
+      "; f": "file_finder::Toggle",
+      "space space": "file_finder::Toggle",
+      "space f f": "file_finder::Toggle",
+      "space f n": "workspace::NewFile",
+      "space b n": "workspace::NewFile",
+      "space f p": "projects::OpenRecent",
+      "space f r": "file_finder::Toggle",
+
+      // ── Search (<leader>s, ;) ────────────────────────────────────────
+      "space /": "workspace::NewSearch", // grep across project
+      "; r": "workspace::NewSearch", // live grep (your habit)
+      "space s g": "workspace::NewSearch", // grep
+      "space s w": "buffer_search::Deploy", // search word in buffer
+      "space s W": "pane::DeploySearch", // search word in project
+      "space s s": "outline::Toggle", // document symbols
+      "space s S": "project_symbols::Toggle", // workspace symbols
+      "; s": "outline::Toggle", // treesitter symbols (your habit)
+      "space s d": "diagnostics::Deploy", // workspace diagnostics
+      "; e": "diagnostics::Deploy", // diagnostics (your habit)
+      "space s k": "command_palette::Toggle", // keymaps -> palette
+      "space s c": "command_palette::Toggle", // commands
+
+      // ── Buffers (<leader>b) ──────────────────────────────────────────
+      "space b b": "pane::AlternateFile", // switch to other buffer
+      "space ,": "tab_switcher::Toggle", // fuzzy tab switcher
+      "space b d": "pane::CloseActiveItem", // delete buffer
+      "space b o": ["pane::CloseInactiveItems", { "close_pinned": false }], // delete other buffers (keeps pinned)
+      "space b l": ["pane::CloseItemsToTheLeft", { "close_pinned": false }], // delete buffers to the left (keeps pinned)
+      "space b r": ["pane::CloseItemsToTheRight", { "close_pinned": false }], // delete buffers to the right (keeps pinned)
+      "space b p": "pane::TogglePinTab", // pin/unpin tab (pin the terminal to protect it)
+      "space b D": "pane::CloseAllItems", // delete buffer + window
+      "shift-h": "pane::ActivatePreviousItem", // prev buffer
+      "shift-l": "pane::ActivateNextItem", // next buffer
+      "[ b": "pane::ActivatePreviousItem", // prev buffer
+      "] b": "pane::ActivateNextItem", // next buffer
+
+      // ── Tab-jump (harpoon-ish, LazyVim <leader>1..9 via ActivateItem) ─
+      "space 1": ["pane::ActivateItem", 0],
+      "space 2": ["pane::ActivateItem", 1],
+      "space 3": ["pane::ActivateItem", 2],
+      "space 4": ["pane::ActivateItem", 3],
+      "space 5": ["pane::ActivateItem", 4],
+      "space 6": ["pane::ActivateItem", 5],
+      "space 7": ["pane::ActivateItem", 6],
+      "space 8": ["pane::ActivateItem", 7],
+      "space 9": ["pane::ActivateItem", 8],
+
+      // ── Code / LSP (<leader>c) ───────────────────────────────────────
+      "space c a": "editor::ToggleCodeActions", // code action
+      "space c r": "editor::Rename", // rename symbol
+      "space c f": "editor::Format", // format
+      "space c d": "editor::Hover", // line diagnostics / hover
+      "space c u": "editor::ToggleCodeActions", // quick fix-ish
+
+      // ── Git (<leader>g) ──────────────────────────────────────────────
+      "space g g": [
+        "task::Spawn",
+        { "task_name": "lazygit", "reveal_target": "center" }
+      ],
+      "space g b": "git::Blame", // toggle blame
+      "space g d": "git::Diff", // diff working tree
+      "space g s": "git_panel::ToggleFocus", // git status panel
+
+      // ── UI toggles (<leader>u) ───────────────────────────────────────
+      "space u i": "editor::ToggleInlayHints",
+      "space u w": "editor::ToggleSoftWrap",
+      "space u l": "editor::ToggleRelativeLineNumbers",
+
+      // ── Markdown (<leader>m) ─────────────────────────────────────────
+      "space m p": "markdown::OpenPreview",
+      "space m P": "markdown::OpenPreviewToTheSide",
+
+      // ── File explorer (<leader>e) ────────────────────────────────────
+      "space e": "workspace::ToggleRightDock", // project panel (dock=right)
+
+      // ── Terminal (<leader>t) ─────────────────────────────────────────
+      "space t t": "terminal_panel::ToggleFocus", // toggle dock terminal
+      "space f t": "terminal_panel::ToggleFocus", // toggle dock terminal
+      "ctrl-alt-t": "workspace::NewCenterTerminal", // opener (also used by the auto-pin chain below)
+      // Open terminal in a new tab AND auto-pin it (ctrl-p pins in Terminal
+      // context), so it survives space bo / bl / br close-others actions.
+      // Chains the open action then sends ctrl-p to pin the focused terminal.
+      "space t T": ["workspace::SendKeystrokes", "ctrl-alt-t ctrl-p"],
+      "space f T": ["workspace::SendKeystrokes", "ctrl-alt-t ctrl-p"],
+
+      // ── Windows / splits (<leader>w) ─────────────────────────────────
+      "space w s": "pane::SplitDown", // split below
+      "space w v": "pane::SplitRight", // split right
+      "space w -": "pane::SplitDown", // split below (alt)
+      "space w |": "pane::SplitRight", // split right (alt)
+      "space w d": "pane::CloseActiveItem", // close window
+      "space w c": "pane::CloseActiveItem", // close window
+      "space w o": "pane::CloseInactiveItems", // close other windows
+
+      // ── Quit (<leader>q) ─────────────────────────────────────────────
+      "space q q": "zed::Quit"
+    }
+  },
+
+  // ───────────────────────────────────────────────────────────────────────
+  // Normal mode only — line moving (Alt-j/k like LazyVim's <A-j>/<A-k>)
+  // ───────────────────────────────────────────────────────────────────────
+  {
+    "context": "Editor && vim_mode == normal && !VimWaiting && !VimObject && !Terminal",
+    "bindings": {
+      "alt-j": "editor::MoveLineDown",
+      "alt-k": "editor::MoveLineUp"
+    }
+  },
+
+  // ───────────────────────────────────────────────────────────────────────
+  // Visual mode — keep selection while moving lines, indent, etc.
+  // ───────────────────────────────────────────────────────────────────────
+  {
+    "context": "Editor && vim_mode == visual && !VimWaiting && !Terminal",
+    "bindings": {
+      "alt-j": "editor::MoveLineDown",
+      "alt-k": "editor::MoveLineUp"
+      // Note: Zed's vim mode already keeps the selection after </> indent.
+    }
+  },
+
+  // ───────────────────────────────────────────────────────────────────────
+  // ]/[ motion pairs — diagnostics, hunks, references (LazyVim defaults)
+  // ───────────────────────────────────────────────────────────────────────
+  {
+    "context": "VimControl && !menu && !Terminal",
+    "bindings": {
+      "g r": "editor::FindAllReferences",
+      "] i": "editor::MoveToEnclosingBracket",
+      "[ i": "editor::MoveToEnclosingBracket",
+
+      // diagnostics
+      "] d": "editor::GoToDiagnostic",
+      "[ d": "editor::GoToPreviousDiagnostic",
+      "] e": "editor::GoToDiagnostic",
+      "[ e": "editor::GoToPreviousDiagnostic",
+
+      // git hunks
+      "] h": "editor::GoToHunk",
+      "[ h": "editor::GoToPreviousHunk",
+      "] c": "editor::GoToHunk",
+      "[ c": "editor::GoToPreviousHunk"
+    }
+  },
+
+  // ───────────────────────────────────────────────────────────────────────
+  // Sneak (s / S) — leap-style motion like LazyVim's flash.nvim
+  // Normal mode: s = forward, S = backward.
+  // ───────────────────────────────────────────────────────────────────────
+  {
+    "context": "vim_mode == normal && !Terminal",
+    "bindings": {
+      "s": "vim::PushSneak",
+      "S": "vim::PushSneakBackward"
+    }
+  },
+
+  // ───────────────────────────────────────────────────────────────────────
+  // Surround — built into Zed vim mode (ys / cs / ds work by default).
+  // Visual mode: S surrounds the selection (LazyVim / mini.surround).
+  // s stays as sneak-forward in visual mode.
+  // ───────────────────────────────────────────────────────────────────────
+  {
+    "context": "vim_mode == visual && !Terminal",
+    "bindings": {
+      "s": "vim::PushSneak",
+      "shift-s": "vim::PushAddSurrounds"
+    }
+  },
+
+  // ───────────────────────────────────────────────────────────────────────
+  // Yazi file manager (replaces neo-tree / netrw) — <leader>- and <leader>cw
+  // ───────────────────────────────────────────────────────────────────────
+  {
+    "context": "(EmptyPane || SharedScreen || (Editor && vim_mode == normal && !menu)) && !Terminal",
+    "bindings": {
+      "space -": [
+        "task::Spawn",
+        { "task_name": "Yazi (current file)", "reveal_target": "center" }
+      ],
+      "space c w": [
+        "task::Spawn",
+        { "task_name": "Yazi (project root)", "reveal_target": "center" }
+      ]
+    }
+  }
+]
