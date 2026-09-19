@@ -9,7 +9,7 @@ directory is a *package* whose contents mirror the layout under `$HOME`.
 brew install stow
 git clone git@github.com:AbhinavJuyal/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-stow -t ~ ghostty git fish
+stow -t ~ ghostty git fish nvim zed
 ```
 
 `stow` creates symlinks, so editing a file in `~/.config/...` edits the file in
@@ -22,12 +22,16 @@ this repo. To unlink a package: `stow -t ~ -D <package>`.
 | `ghostty` | `~/.config/ghostty`  | JetBrainsMono Nerd Font 15, Gruvbox dark hard   |
 | `git`     | `~/.gitconfig`, `~/.gitignore` | delta as pager, `zdiff3` merge conflicts |
 | `fish`    | `~/.config/fish`     | login shell; `fish_variables` is machine state and not tracked |
+| `nvim`    | `~/.config/nvim`     | LazyVim                                        |
+| `zed`     | `~/.config/zed`      | settings, keymap, tasks; prompt-library DB not tracked |
 
 ## Not tracked here
 
-- **Neovim** — its own repo at [AbhinavJuyal/nvim](https://github.com/AbhinavJuyal/nvim),
-  stowed from `nvim/.config/nvim` but git-ignored here so the two histories stay separate.
-- **Zed** — keeps its own git repo at `~/.config/zed` with local-only history.
+- `fish_variables` and Zed's `prompts/prompts-library-db.0.mdb/` — machine-local
+  runtime state, regenerated automatically.
+
+Neovim and Zed previously had their own repos; both were merged in with
+`git subtree`, so their full histories are present in this one.
 
 ## Dependencies
 
