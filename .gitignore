@@ -1,8 +1,4 @@
 .DS_Store
 
-# Zed keeps its own git repo at ~/.config/zed (local history, no remote).
-# Not stowed from here to avoid destroying that history.
-zed/
-
 # Machine-local state, regenerated automatically.
 fish/.config/fish/fish_variables
